@@ -1,0 +1,67 @@
+{% extends 'cours/base.html' %}
+{% block titre %}Accueil{% endblock %}
+
+{% block contenu %}
+<div class="row mb-4">
+  <div class="col-12">
+    <h1 class="display-5 fw-bold text-primary">
+      <i class="bi bi-mortarboard-fill me-2"></i>Gestion de l'Université
+    </h1>
+
+    {% if user.is_authenticated %}
+    <div class="alert alert-success d-flex align-items-center">
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+      <span>Bonjour <strong>{{ user.username }}</strong>, vous êtes connecté.</span>
+    </div>
+    {% else %}
+    <div class="alert alert-warning d-flex align-items-center">
+      <i class="bi bi-lock-fill me-2 fs-5"></i>
+      <span>Vous n'êtes pas connecté. <a href="{% url 'connexion' %}" class="alert-link">Se connecter</a> pour accéder aux données.</span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if user.is_authenticated %}
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card h-100">
+      <div class="card-body text-center py-5">
+        <i class="bi bi-book display-3 text-primary"></i>
+        <h2 class="mt-3 display-6 fw-bold">{{ nb_cours }}</h2>
+        <p class="text-muted">Cours enregistrés</p>
+        <a href="{% url 'liste_cours' %}" class="btn btn-primary">
+          <i class="bi bi-list-ul me-1"></i>Voir les cours
+        </a>
+        <a href="{% url 'ajouter_cours' %}" class="btn btn-outline-primary ms-2">
+          <i class="bi bi-plus-circle me-1"></i>Ajouter
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card h-100">
+      <div class="card-body text-center py-5">
+        <i class="bi bi-person-badge display-3 text-success"></i>
+        <h2 class="mt-3 display-6 fw-bold">{{ nb_enseignants }}</h2>
+        <p class="text-muted">Enseignants enregistrés</p>
+        <a href="{% url 'liste_enseignants' %}" class="btn btn-success">
+          <i class="bi bi-list-ul me-1"></i>Voir les enseignants
+        </a>
+        <a href="{% url 'ajouter_enseignant' %}" class="btn btn-outline-success ms-2">
+          <i class="bi bi-plus-circle me-1"></i>Ajouter
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="text-center py-5">
+  <i class="bi bi-shield-lock display-1 text-muted"></i>
+  <p class="mt-3 text-muted fs-5">Connectez-vous pour voir les statistiques et gérer les données.</p>
+  <a href="{% url 'connexion' %}" class="btn btn-primary btn-lg mt-2">
+    <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+  </a>
+</div>
+{% endif %}
+{% endblock %}
